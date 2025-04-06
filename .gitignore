@@ -1,33 +1,61 @@
-# Gradle files
-.gradle/
-build/
+# =============== 📌 Android & Gradle GitIgnore =============== #
 
-# Local configuration file (sdk path, etc)
-local.properties
-
-# Log/OS Files
-*.log
-
-# Android Studio generated files and folders
-captures/
-.externalNativeBuild/
-.cxx/
-*.apk
-output.json
-
-# IntelliJ
+# ✅ IntelliJ/Android Studio settings
 *.iml
 .idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
+.idea/*
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
 
-# Keystore files
-*.jks
-*.keystore
+# ✅ Gradle
+.gradle/
+/.gradle/
+/local.properties  # Prevents machine-specific settings from being committed
+/.gradle/
+/captures/
+.externalNativeBuild/
+.cxx/
 
-# Google Services (e.g. APIs or Firebase)
-google-services.json
+# ✅ Build output
+/build/
+/outputs/
+/intermediates/
+/out/
 
-# Android Profiling
-*.hprof
+# ✅ OS-specific files
+.DS_Store  # MacOS
+Thumbs.db  # Windows
+
+# ✅ Dependency directories
+/node_modules/  # Node.js dependencies
+/venv/  # Python virtual environment
+
+# ✅ Log files
+/logs/
+*.log
+*.log.*
+
+# ✅ ProGuard & mapping files
+*.mapping
+*.bak
+*.bak.gz
+/mapping.txt
+
+# ✅ Google Services (Optional, if using Firebase)
+/google-services.json
+/google-services.xml
+/service-account.json
+
+# ✅ Android Lint reports
+lint/intermediates/
+lint/generated/
+lint/reports/
+
+# ✅ Miscellaneous IDE & System Files
+*.swp
+*.swo
+
+local.properties
+centralcore/build/
+milestone/modules01/build/
+app/build/
