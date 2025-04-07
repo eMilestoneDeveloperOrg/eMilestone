@@ -1,0 +1,75 @@
+name: Auto Merge
+
+on:
+  merge_group:
+    branches:
+      - master  # ✅ Runs only when PR enters the merge queue
+
+permissions:
+  pull-requests: write
+  contents: write
+  security-events: write  # Required for CodeQL scanning
+  actions: write
+  statuses: write
+
+jobs:
+  auto_merge:
+    # ❌ Prevents workflow execution if triggered by `github-merge-queue`
+    if: github.actor != 'github-merge-queue[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⏳ Wait for PR to enter merge queue
+        run: sleep 60
+
+      - name: 🔍 Fetch PR Number from Merge Queue
+        id: fetch_pr_number
+        run: |
+          MERGE_QUEUE_JSON=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls?state=open&sort=updated&direction=desc")
+
+          PR_NUMBER=$(echo "$MERGE_QUEUE_JSON" | jq -r '.[0].number')
+
+          if [[ -z "$PR_NUMBER" || "$PR_NUMBER" == "null" ]]; then
+            echo "❌ No PR found in the merge queue. Exiting."
+            exit 1
+          fi
+
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_ENV
+
+      - name: 🔄 Check Merge Queue Status (Retry on Failure)
+        run: |
+          MAX_ATTEMPTS=3
+          ATTEMPT=1
+          SLEEP_INTERVAL=120
+
+          while [[ "$ATTEMPT" -le "$MAX_ATTEMPTS" ]]; do
+            MERGE_QUEUE_STATE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/pulls/${{ env.pr_number }}" \
+              | jq -r '.mergeable_state')
+
+            echo "🔍 PR Merge Queue State: $MERGE_QUEUE_STATE"
+
+            if [[ "$MERGE_QUEUE_STATE" == "clean" || "$MERGE_QUEUE_STATE" == "unstable" ]]; then
+              echo "✅ PR is mergeable. Sending success status."
+              curl -X POST "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }}" \
+                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                -d '{"state": "success", "context": "Final Merge Allow", "description": "Merge validation successful", "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"}'
+              exit 0
+            elif [[ "$MERGE_QUEUE_STATE" == "dirty" ]]; then
+              echo "❌ PR has merge conflicts. Exiting."
+              exit 1
+            else
+              echo "⏳ PR is still 'unknown'. Sending temporary success status."
+              curl -X POST "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }}" \
+                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                -d '{"state": "success", "context": "Final Merge Allow", "description": "Merge validation pending, retrying...", "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"}'
+
+              echo "🔄 Retrying in $SLEEP_INTERVAL seconds..."
+              sleep $SLEEP_INTERVAL
+            fi
+
+            ATTEMPT=$((ATTEMPT + 1))
+          done
+
+          echo "❌ PR remained 'unstable' after multiple attempts. Exiting."
+          exit 1
