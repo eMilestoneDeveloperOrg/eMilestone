@@ -64,7 +64,6 @@ jobs:
           echo "🔍 Extracting PR Number..."
           PR_NUMBER="${{ github.event.pull_request.number }}"
           REPO_NAME="${{ github.repository }}"
-          PR_BRANCH="${{ github.event.pull_request.head.ref }}"  # ✅ Fixed issue here
           
           if [[ -z "$PR_NUMBER" || "$PR_NUMBER" == "null" ]]; then
             echo "❌ ERROR: PR number is missing or invalid."
@@ -89,7 +88,7 @@ jobs:
 
           echo "🔍 Branch criteria : Checking PR Branch Naming Conventions..."
           echo "🔍 Checking branch name..."
-          PR_BRANCH="${{ github.event.pull_request.head.ref }}"
+          PR_BRANCH="${{ github.event.pull_request.head.ref }}"  # ✅ Fixed issue here
           echo "🔹 PR Branch: $PR_BRANCH"
           
           # Check if branch name contains the required string
@@ -119,7 +118,7 @@ jobs:
           echo "🔍 Step 2️⃣: Checking if PR author '$PR_USER' is an Organization Member or Repository Collaborator..."
           
           # ✅ Check if the PR author is an Organization Member
-          ORG_MEMBERS_URL="https://api.github.com/orgs/EduMilestoneDeveloperOrg/members"
+          ORG_MEMBERS_URL="https://api.github.com/orgs/eMilestoneDeveloperOrg/members"
           ORG_MEMBERS_RESPONSE=$(curl -s -H "Authorization: token $GH_TOKEN" "$ORG_MEMBERS_URL")
           # Extract organization members and log them
           ORG_MEMBERS=$(echo "$ORG_MEMBERS_RESPONSE" | jq -r '.[].login')
