@@ -100,7 +100,7 @@ jobs:
           echo "✅ Branch name '$PR_BRANCH' is valid and meets the required pattern."
 
           echo "🔍 Step 1️⃣: Checking if PR author is a 'neural-vision' team member..."
-          TEAM_MEMBERS_URL="https://api.github.com/orgs/EduMilestoneDeveloperOrg/teams/neural-vision/members"
+          TEAM_MEMBERS_URL="https://api.github.com/orgs/eMilestoneDeveloperOrg/teams/neural-vision/members"
           TEAM_RESPONSE=$(curl -s -H "Authorization: token $GH_TOKEN" "$TEAM_MEMBERS_URL")
           
           if echo "$TEAM_RESPONSE" | jq -e .message 2>/dev/null | grep -q "Not Found"; then
