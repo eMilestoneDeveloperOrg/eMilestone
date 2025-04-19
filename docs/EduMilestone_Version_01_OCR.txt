@@ -86,7 +86,7 @@ eMilestone/                                           				    # 📌 Root eMiles
 ├── centralcore/														# 📌 Shared Core for All Milestone Modules
 │   ├── src/
 │	│   │   ├── main/
-│	│   │   │   ├── java/com/eMilestone/centralcore/ 					# 📌 Central Core Logic
+│	│   │   │   ├── java/com/eMilestone/centralcore/ 					# 📌 eMilestone Central Core Logic
 │   │   │	│	│	├── database/                                 		# 🔹 Central Database (Room)
 │   │   │	│	│	├── auth/                                     		# 🔹 Shared User Authentication
 │   │   │	│	│	├── ui/                                       		# 🔹 Common UI Components for all Modules
