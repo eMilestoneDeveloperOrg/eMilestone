@@ -1,0 +1,161 @@
+eMilestone - Version 01_File_Structure
+Here is the optimized file structure for Version 01 of eMilestone, focusing only on *OCR* under *Product 1 - Tools Section*. This will be the first release on the Play Store.  
+
+📌 eMilestone - Version 01 File Structure (OCR Focused)
+*🛠 OCR Implementation Plan*
+Each *OCR issue* is solved through a *dedicated file* to ensure *high performance* and *maintainability*.  
+
+*Improve OCR Accuracy*
+✅ *Preprocessing* (`preprocessing/PreprocessingUtils.kt`)  
+- Convert image to *grayscale*  
+- *Reduce noise* using *Gaussian Blur*  
+- Apply *contrast enhancement* for better recognition  
+
+✅ *ML Model Optimization* (`recognition/OCRProcessor.kt`)  
+- Use *Google ML Kit On-Device OCR*  
+- Implement *high-resolution text detection*  
+
+*Fix OCR Not Working on Some Devices*
+✅ *Permissions* (`core/permissions/PermissionHandler.kt`)  
+- Ensure *camera & storage permissions* are granted  
+- Use *try-catch blocks* to handle errors  
+
+*Speed Up OCR Processing*
+✅ *Image Resizing* (`preprocessing/ImageResizer.kt`)  
+- *Resize large images* before OCR processing
+
+✅ *Asynchronous Processing* (`recognition/OCRProcessor.kt`)  
+- Use *Kotlin Coroutines* for *background execution*  
+
+*Add Text Editing Before Copying*
+✅ *Text Editor UI* (`text_editor/TextEditorActivity.kt`)  
+- Provide a *text editor* for users to edit extracted text  
+
+*Add Multi-Language Support*
+✅ *Language Selection* (`languages/LanguageSupport.kt`)  
+- Enable *multiple language OCR support*  
+
+*Fix Words Getting Cut Off*
+✅ *Advanced Text Detection* (`recognition/OCRProcessor.kt`)  
+- Implement *region-based segmentation*  
+
+*Add Image Cropping Before OCR Processing*
+✅ *Image Cropping Feature* (`cropping/ImageCropper.kt`)  
+- Allow *cropping images before OCR starts*  
+
+*Improve Camera Capture Quality*
+✅ *Camera Module* (`camera/CameraHandler.kt`)  
+- Adjust *focus & exposure* for clear images  
+
+*Reduce App Size (<2MB)*
+✅ *Optimizations*  
+- Remove *unnecessary libraries*  
+- Use *ProGuard & R8 for code shrinking*  
+
+*Add Handwritten Text Recognition*
+✅ *Google ML Kit Digital Ink API* (`handwriting/HandwritingProcessor.kt`)  
+- Recognize *handwritten text accurately*
+
+ONLY OCR TOOLS VERSION 01 RELEASE: M => milestone; M01 => milestone_modules_01; PROD_TOOLS => products_tools; OCR => tools_ocr Development
+#IMPLEMENTATION_START_M/M01/PROD_TOOLS/OCR
+📁 📌 Root Project Directory
+
+eMilestone/                                           				# 📌 Root Project Directory
+├── app/                                                				# 📌 Main Application Module
+│   ├── src/															# 📌 Main Application Module Source Code
+│   │   ├── main/														# 📌 Main Application Module Source Code
+│   │   │   ├── java/com/eMilestone/app/              				# 📌 Base Package
+│   │   │   │   ├── core/                               				# 📌 Basics Core Module
+│   │   │   │   │   ├── permissions/                    				# 🔹 Basics Handles permissions (Camera, Storage, etc.)
+│   │   │   │   │   │   ├── PermissionHandler.kt        				# 📌 Basics Permission handling logic
+│   │   │   │   │   ├── network/                        				# 🔹 Basics API calls & Networking logic
+│   │   │   │   ├── modules												# 📌 ModuleManager is responsible for managing the loading and unloading of modules in the application.
+│   │   │   │   │   ├── ModuleManager.kt                     			# 📌 ModuleManager is responsible for managing the loading and unloading of modules in the application.
+│   │   │   │   ├── navigation											# 📌 navigation is responsible for managing all ui for loaded modules in the application.
+│   │   │   │   │   ├── AppNavigation.kt								# 📌 navigation is responsible for managing all ui for loaded modules in the application.
+│   │   │   │   ├── MainApplication.kt                  				# 🔹 App Initialization (Main app logic)
+│   │   │   │   ├── MainActivity.kt                  				# 🔹 Base Application Class
+│   │   │   │   ├── dependencies.gradle                 				# 🔹 Library Dependencies
+│   │   │   ├── res/                                    				# 📌 Resources (XML files)
+│   │   │   │   ├── drawable/                           				# 🔹 Images & Icons
+│   │   │   │   ├── layout/                             				# 🔹 UI Layout Files
+│   │   │   │   ├── values/                             				# 🔹 Strings, Colors, Dimensions
+│   │	│   ├── AndroidManifest.xml                     				# 🔹 App Permissions & Entry Points
+│   │   ├── build.gradle                                				# 🔹 Build Configuration for Main Application
+│   │   ├── proguard-rules.pro                          				# 🔹 Code Obfuscation & Security
+├── centralcore/														# 📌 Shared Core for All Milestone Modules
+│   ├── src/
+│	│   │   ├── main/
+│	│   │   │   ├── java/com/eMilestone/centralcore/ 					# 📌 Central Core Logic
+│   │   │	│	│	├── database/                                 		# 🔹 Central Database (Room)
+│   │   │	│	│	├── auth/                                     		# 🔹 Shared User Authentication
+│   │   │	│	│	├── ui/                                       		# 🔹 Common UI Components for all Modules
+│   │   │	│	│	├── utils/                                    		# 🔹 Helper functions, constants
+│   │   │	│	│	├── models/                                   		# 🔹 Shared Data Models
+│   │   │	│	│	├── di/                                       		# 🔹 Dependency Injection (Hilt/Koin)
+│   │   │	│	│	│   ├── CoreModule.kt                         		# 🔹 DI Configuration
+│	│	│	│   ├── AndroidManifest.xml                           		# 🔹 Manifest for Central Core
+│ 	│   ├── build.gradle.kts                              		  		# 🔹 Build Configuration for Central Core
+│ 	│   ├── proguard-rules.pro                              			# 🔹 Code Obfuscation & Security for Central Core
+│ 	│   ├── consumer-rules.pro											# 🔹 Code Consumer for Central Core
+├── milestone/													# ✅ Milestone Modules M/M01.
+│	├── modules01/
+│	│   ├── src/
+│	│   │   ├── main/
+│	│   │   │   ├── java/com/eMilestone/modules01/ 			# ✅📌 Milestone 01 Modules: Product Tools Section:Independent Modular Heavy Services
+│ 	│   │   │   │   ├── toolscore/                       				# 📌 Local Core Functionality for Product Tools Section
+│	│ 	│   │   │   │   ├── utils/            							# 🔹 Local for Product Tools Section Helper functions, constants, logs
+│   │   │   │   │   │   │   ├── PreprocessingUtils.kt     				# ⭐ Helper functions for preprocessing
+│   │   │   │   │   │   │   ├── HandwritingUtils.kt       				# ⭐ Helper for handwriting OCR
+│	│ 	│   │   │   │   ├── storage/                					# 🔹 Local for Product Tools Section Saves results (TXT, PDF, DOCX)
+│   │   │   │   │   │   │   ├── OCRStorage.kt             				# ⭐ 📌 OCR Result Storage Saves OCR results
+│	│ 	│   │   │   │   ├── analytics/                					# 🔹 Local for Product Tools Section Tracks OCR usage & errors
+│   │   │   │   │   │	│   ├── AnalyticsManager.kt       				# ⭐ Local for Product 1 - Tools Section Handles analytics
+│ 	│   │   │   │   ├── di/                    							# 🔹 Module Dependency Injection
+│   │   │   │   │   │	└── Milestone01Module.kt
+│   │   │   │	│	├── tools/									        # 📌 Products Tools Section (Feature-based on modules 01):Independent Modular Heavy Services
+│	│	│   │   │   │   ├── features/              						# 📌 Features within Milestone Modules 01 Products Tools Section
+│	│	│	│	│	│	│	├── ProductToolsMainApp.kt             		# 📌 Product Tools - Main Application
+│	│	│   │   │   │   │   ├── ocr/                					# 🔹 OCR (Image to Text) - Version 01 Release:Light Weight Independent Microservices
+│	│	│   │   │   │   │   │   ├── preprocessing/  					# 🟢 Image Preprocessing (Grayscale, Noise Removal)
+│	│   │   │   │   │   │   │   │   ├── BlurDetection.kt          		# ⭐ Detects blurry images
+│	│   │   │   │   │   │   │   │   ├── ImageResizer.kt           		# ⭐ Resizes images for OCR
+│	│   │   │   │   │   │   │   │   ├── SuperResolution.kt        		# ⭐ AI Super-Resolution using ESRGAN
+│	│	│   │   │   │   │   │   ├── recognition/    					# 🟢 OCR Text Extraction Logic (ML Kit, Tesseract)
+│	│   │   │   │   │   │   │   │   ├── OCRProcessor.kt           		# ⭐ Processes text from images
+│	│   │   │   │   │   │   │   │   ├── CloudOCRService.kt        		# ⭐ Google Cloud OCR API handling
+│	│	│   │   │   │   │   │   ├── ui/             					# 🟢 OCR UI Screens (Activity/Fragments)
+│	│   │   │   │   │   │   │   │   ├── OCRActivity.kt            		# ⭐ Main OCR UI Screen
+│	│   │   │   │   │   │   │   │   ├── TextEditorActivity.kt     		# ⭐ Text Editing after OCR
+│	│	│   │   │   │   │   │   ├── camera/         					# 🟢 Camera Module for OCR (Live Capture, Flash)
+│ 	│   │   │   │   │   │   │   │   ├── CameraHandler.kt          		# ⭐ Manages CameraX
+│	│	│   │   │   │   │   │   ├── cropping/       					# 🟢 Image Cropping (Before OCR)
+│	│   │   │   │   │   │   │   │   ├── ImageCropper.kt           		# ⭐ Crops images before OCR
+│	│	│   │   │   │   │   │   ├── handwriting/    					# 🟢 Handwritten Text Recognition (ML Kit Digital Ink)
+│	│   │   │   │   │   │   │   │   ├── HandwritingProcessor.kt   		# ⭐ Recognizes handwriting
+│	│   │   │   │   │   │   │   ├── languages/                    		# 🟢 OCR Language Support
+│	│   │   │   │   │   │   │   │   ├── LanguageSupport.kt        		# ⭐ Multi-language OCR support
+│	│   │   │   │   │   │   │   ├──OCRProcessor.kt                      # 🟢 Main Files to control Everythng in OCR.
+│	│   │   │   │   ├── navigation/            							# 📌 Module 01 Product Tools Section Navigation Graphs
+│	│   │	│   ├── AndroidManifest.xml            						# 🔹 Module 01 Product Tools Section Manifest
+│	│   ├── build.gradle                       							# 🔹 Milestone Module 01 Build Configuration
+│ 	│   ├── proguard-rules.pro                              			# 🔹 Milestone Module 01 Code Obfuscation & Security for Module 01
+│ 	│   ├── consumer-rules.pro											# 🔹 Milestone Module 01 Code Consumer for Module 01
+├── build.gradle
+├── README.md                           								# 📌 Project Documentation
+├── settings.gradle
+├── scripts/                                    						# 📌 Utility Scripts (Build, Deploy, CI/CD)
+├── docs/                                       						# 📌 Documentation (API, Architecture, Guidelines)
+├── tests/                                      						# 📌 Automated Tests (Unit, UI, Integration)
+├── .github/                                    						# 📌 GitHub Workflows (CI/CD)
+├── Makefile                                    						# 🔹 Makefile for Build Automation
+├── .gitignore                                  						# 📌 Git Ignore (Excluding Unwanted Files)
+├── LICENSE                                     						# 📌 License for the Project
+├── CONTRIBUTING.md                             						# 📌 Contribution Guidelines
+├── CHANGELOG.md                                						# 📌 Version History & Updates
+
+#IMPLEMENTATION_END_M/M01/PROD_TOOLS/OCR
+We’re developing OCR (Version 01 Release) first, followed by more features.
+Milestone Modules 01 → Tools Section Product (Contains multiple independent microservices like OCR, PDF Viewer, Word Processing, etc)
+
+#IMPLEMENTATION
