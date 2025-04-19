@@ -60,7 +60,7 @@ ONLY OCR TOOLS VERSION 01 RELEASE: M => milestone; M01 => milestone_modules_01; 
 #IMPLEMENTATION_START_M/M01/PROD_TOOLS/OCR
 📁 📌 Root Project Directory
 
-eMilestone/                                           				# 📌 Root Project Directory
+eMilestone/                                           				    # 📌 Root eMilestone Project Directory
 ├── app/                                                				# 📌 Main Application Module
 │   ├── src/															# 📌 Main Application Module Source Code
 │   │   ├── main/														# 📌 Main Application Module Source Code
