@@ -98,7 +98,7 @@ eMilestone/                                           				    # 📌 Root eMiles
 │ 	│   ├── build.gradle.kts                              		  		# 🔹 Build Configuration for Central Core
 │ 	│   ├── proguard-rules.pro                              			# 🔹 Code Obfuscation & Security for Central Core
 │ 	│   ├── consumer-rules.pro											# 🔹 Code Consumer for Central Core
-├── milestone/													# ✅ Milestone Modules M/M01.
+├── milestone/													        # ✅ eMilestone Milestone Modules M/M01.
 │	├── modules01/
 │	│   ├── src/
 │	│   │   ├── main/
