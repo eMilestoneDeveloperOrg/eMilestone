@@ -64,7 +64,7 @@ eMilestone/                                           				    # 📌 Root eMiles
 ├── app/                                                				# 📌 Main Application Module
 │   ├── src/															# 📌 Main Application Module Source Code
 │   │   ├── main/														# 📌 Main Application Module Source Code
-│   │   │   ├── java/com/eMilestone/app/              				# 📌 Base Package
+│   │   │   ├── java/com/eMilestone/app/              				    # 📌 Base eMilestone Package
 │   │   │   │   ├── core/                               				# 📌 Basics Core Module
 │   │   │   │   │   ├── permissions/                    				# 🔹 Basics Handles permissions (Camera, Storage, etc.)
 │   │   │   │   │   │   ├── PermissionHandler.kt        				# 📌 Basics Permission handling logic
