@@ -1,0 +1,82 @@
+# ✅ Versions Section: Defines version numbers for dependencies
+[versions]
+agp = "8.8.0"                        # Android Gradle Plugin version: Defines the version of the Android Gradle Plugin used for building the app.
+kotlin = "2.1.20"                     # Kotlin version: Specifies the Kotlin version for compiling the codebase.
+ksp = "2.1.20-1.0.31"                # ksp: Ksp use for Kotlin Symbol Processing
+coreKtx = "1.15.0"                   # AndroidX Core KTX: A set of Kotlin extensions for AndroidX core libraries.
+junit = "4.13.2"                     # JUnit for testing: The JUnit version for unit tests in Java/Kotlin.
+junitVersion = "1.2.1"               # AndroidX JUnit version: Version of AndroidX JUnit used in Android instrumentation tests.
+espressoCore = "3.6.1"               # Espresso for UI testing: Version of Espresso for automated UI testing.
+lifecycleRuntimeKtx = "2.8.7"        # Lifecycle KTX: Provides Kotlin extensions for Android's lifecycle components.
+activityCompose = "1.10.0"           # Jetpack Compose Activity: Defines the version of the Activity used for Compose-based UIs.
+composeBom = "2024.04.01"            # Jetpack Compose BOM version: Specifies the BOM (Bill of Materials) for managing Compose dependencies.
+appcompat = "1.7.0"                  # AndroidX AppCompat: Provides backwards-compatible support for newer Android features.
+material = "1.12.0"                  # Classic Material Components for XML-based UI: Material Components library for non-Compose UI.
+material3 = "1.2.1"                  # etpack Compose Material3: Material3 library for Compose-based UIs.
+multidex = "2.0.1"                   # Multidex support for older devices: Ensures multi-dex support for Android applications on devices with low method limits.
+compose = "1.0.5"                    # Jetpack Compose version: Specifies the version of Jetpack Compose.
+activityKtx = "1.8.0"                # AndroidX Activity KTX: Kotlin extensions for Android Activity components.
+hilt = "2.51.1"                        # The version of Hilt being used. You can set this to the latest stable release.
+room = "2.6.1"                       # Define Room version here
+
+
+# ✅ Libraries Section: Defines dependencies using the versions above
+[libraries]
+# Core AndroidX dependencies
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+
+# ✅ Jetpack Compose dependencies
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+
+# ✅ Fix: Add Classic Material Components (For XML-based UI)
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+# ✅ Jetpack Compose Material3 (For Compose-based UI)
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+
+# ✅  Navigation Component for Jetpack Compose
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version = "2.7.7" }
+
+# ✅  AndroidX Lifecycle
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+
+# ✅  Activity Compose (Needed for Compose Navigation)
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+
+# ✅ Testing dependencies
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+# ✅ Material Icons Extended for Jetpack Compose using version catalog
+compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
+
+# Room (If using Room)
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+
+# Hilt for Dependency Injection
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+
+# ✅ Plugins Section: Defines Gradle plugins
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }       # Plugin for Android application project setup.
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }      # Kotlin plugin for Android projects.
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }  # Kotlin plugin for Jetpack Compose.
+android-library = { id = "com.android.library", version.ref = "agp" }               # Plugin for Android library projects setup.
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }    # Add Kotlin Ksp plugin
+
+# ✅ Add Hilt plugin to enable DI in Android projects
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" } # Hilt plugin for DI support across the project.
