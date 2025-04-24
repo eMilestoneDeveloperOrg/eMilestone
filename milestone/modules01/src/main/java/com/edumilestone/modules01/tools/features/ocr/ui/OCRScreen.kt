@@ -659,8 +659,10 @@ fun ModernProcessingAnimation() {
  */
 fun loadImageFromUri(view: View, uri: Uri): Bitmap {
     return if (Build.VERSION.SDK_INT < 28) {
-        @Suppress("DEPRECATION")
-        MediaStore.Images.Media.getBitmap(view.context.contentResolver, uri)
+        val inputStream = view.context.contentResolver.openInputStream(uri)
+        BitmapFactory.decodeStream(inputStream).also {
+            inputStream?.close()
+        }
     } else {
         val source = ImageDecoder.createSource(view.context.contentResolver, uri)
         ImageDecoder.decodeBitmap(source)
